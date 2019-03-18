@@ -5,7 +5,7 @@ low = 0
 high = 10000
 steps = 0
 best_rate = 10000
-while low <= high:
+while low < high-1:
     mid = int((low+high)/2)
     month = 0
     current_savings = 0.0
@@ -16,14 +16,16 @@ while low <= high:
         current_savings = (current_savings*0.04)/12 + \
             salary/12*mid/10000+current_savings
         month = month+1
+    steps += 1
+    if abs(current_savings-total_cost*0.25) < 100:
+        best_rate = min(mid, best_rate)
+        break
     if current_savings < total_cost*0.25:
         low = mid
     elif current_savings >= total_cost*0.25:
         best_rate = min(mid, best_rate)
         high = mid
-    if high-low == 1 or high == low:
-        break
-    steps += 1
+        
 if(best_rate != 10000):
     print('Best savings rate:%s\nSteps in bisection search: %s\n' %
           (float(best_rate/10000), steps))
