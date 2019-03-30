@@ -1,7 +1,7 @@
 # Problem Set 2, hangman.py
-# Name:
-# Collaborators:
-# Time spent:
+# Name: Guoziyu
+# Collaborators: None
+# Time spent: two hours
 
 # Hangman Game
 # -----------------------------------
