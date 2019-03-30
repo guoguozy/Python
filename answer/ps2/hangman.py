@@ -83,7 +83,7 @@ def get_guessed_word(secret_word, letters_guessed):
     result = ''
     for i in range(len(secret_word)):
         if secret_word[i] in letters_guessed:
-            result = result+secret_word[i]
+            result = result+secret_word[i]+' '
         else:
             result = result+'_'
     return result
