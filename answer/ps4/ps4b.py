@@ -110,16 +110,13 @@ class Message(object):
         Returns: a dictionary mapping a letter (string) to
                  another letter (string).
         '''
-        result_dict = {}
-        l = list(self.message_text)
-        for i in l:
-            if i.isalpha():
-                if i in string.ascii_lowercase:
-                    result_dict[i] = string.ascii_lowercase[(string.ascii_lowercase.find(
-                        i)+shift) % 26]
-                else:
-                    result_dict[i] = string.ascii_uppercase[(string.ascii_uppercase.find(
-                        i)+shift) % 26]
+        result_dict = {}  # 结果字典
+        for i in string.ascii_lowercase:  # 小写
+            result_dict[i] = string.ascii_lowercase[(string.ascii_lowercase.find(
+                i)+shift) % 26]  # 将偏移后对应字母加入字典
+        for i in string.ascii_uppercase:  # 大写
+            result_dict[i] = string.ascii_uppercase[(string.ascii_uppercase.find(
+                i)+shift) % 26]
         return result_dict
 
     def apply_shift(self, shift):
@@ -138,9 +135,9 @@ class Message(object):
         dict = self.build_shift_dict(shift)
         for i in self.get_message_text():
             if i != ' 'and i not in string.punctuation:
-                result_message += dict[i]
+                result_message += dict[i]  # 将解密结果加上
             else:
-                result_message += i
+                result_message += i  # 忽略标点符号等无关符号
         return result_message
 
 
@@ -218,34 +215,20 @@ class CiphertextMessage(Message):
         super().__init__(text)
 
     def decrypt_message(self):
-        '''
-        Decrypt self.message_text by trying every possible shift value
-        and find the "best" one. We will define "best" as the shift that
-        creates the maximum number of real words when we use apply_shift(shift)
-        on the message text. If s is the original shift value used to encrypt
-        the message, then we would expect 26 - s to be the best shift value
-        for decrypting it.
-
-        Note: if multiple shifts are equally good such that they all create
-        the maximum number of valid words, you may choose any of those shifts
-        (and their corresponding decrypted messages) to return
-
-        Returns: a tuple of the best shift value used to decrypt the message
-        and the decrypted message text using that shift value
-        '''
+        
         max_num = 0
         best_shift = 0
-        for shift in range(1, 27):
+        for shift in range(1, 27):  # 遍历所有的偏移数可能
             valid_num = 0
             str = self.apply_shift(shift)
             list = str.split()
             for i in list:
                 if is_word(self.get_valid_words(), i):
-                    valid_num = valid_num+1
+                    valid_num = valid_num+1  # 统计合法的单词数
             if valid_num > max_num:
-                best_shift = shift
+                best_shift = shift  # 将最大的shift记录于best_shift
             max_num = max(max_num, valid_num)
-        return (best_shift, self.apply_shift(best_shift))
+        return (best_shift, self.apply_shift(best_shift))  # 返回一个元祖
 
 
 if __name__ == '__main__':

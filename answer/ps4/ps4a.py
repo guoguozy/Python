@@ -32,9 +32,9 @@ def get_permutations(sequence):
             sequence_list[i], sequence_list[0] = sequence_list[0], sequence_list[i]
             sequence = ''.join(sequence_list)  # 将固定字母置于首位并转换字符串
             for j in get_permutations(sequence[1:len(sequence)]):
-                result_list.append(sequence[0]+j)
+                result_list.append(sequence[0]+j)  # 将首位附加上
             sequence_list[i], sequence_list[0] = sequence_list[0], sequence_list[i]
-            sequence = ''.join(sequence_list)
+            sequence = ''.join(sequence_list)  # 还原字符串
     return result_list
 
 

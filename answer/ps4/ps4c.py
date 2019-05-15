@@ -115,9 +115,9 @@ class SubMessage(object):
         '''
 
         result_dict = {}
-        l = list(vowels_permutation.lower())
+        l = list(vowels_permutation.lower())  # 统一先化为小写
         for i in VOWELS_LOWER+VOWELS_UPPER+CONSONANTS_LOWER+CONSONANTS_UPPER:
-            if i == 'a':
+            if i == 'a':  # 对于元音特殊处理
                 result_dict[i] = l[0]
             elif i == 'e':
                 result_dict[i] = l[1]
@@ -190,15 +190,15 @@ class EncryptedSubMessage(SubMessage):
         '''
         max_num = 0
         best_perm = ''
-        for i in get_permutations(VOWELS_LOWER):
+        for i in get_permutations(VOWELS_LOWER):  # 遍历所有排列方式
             str = self.apply_transpose(self.build_transpose_dict(i))
             valid_num = 0
             list = str.split()
             for j in list:
                 if is_word(self.get_valid_words(), j):
-                    valid_num = valid_num+1
+                    valid_num = valid_num+1  # 计算单词合法数
             if valid_num > max_num:
-                best_perm = i
+                best_perm = i  # 记录最佳的
             max_num = max(max_num, valid_num)
         return self.apply_transpose(self.build_transpose_dict(best_perm))
 
@@ -243,4 +243,3 @@ if __name__ == '__main__':
     # test for EncryptedSubMessage (second)
     enc_message = EncryptedSubMessage(message.apply_transpose(enc_dict))
     print("Decrypted message:", enc_message.decrypt_message())
-
