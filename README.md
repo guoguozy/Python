@@ -1,2 +1,2 @@
 # Python
-Python_learning
+Solutions for some python problems
